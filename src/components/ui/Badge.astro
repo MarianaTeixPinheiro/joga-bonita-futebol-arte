@@ -1,0 +1,41 @@
+---
+/**
+ * Joga Bonita — Badge
+ * Small status / promo marker. The storefront's red "21% OFF" corner badge,
+ * plus mint / ink / forest / yellow / neutral tones.
+ */
+interface Props {
+  tone?: 'sale' | 'mint' | 'ink' | 'forest' | 'yellow' | 'neutral';
+  size?: 'sm' | 'md';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { tone = 'sale', size = 'md', class: className, ...rest } = Astro.props;
+
+const tones: Record<string, string> = {
+  sale: 'bg-sale text-white',
+  mint: 'bg-mint text-ink',
+  ink: 'bg-ink text-white',
+  forest: 'bg-forest text-white',
+  yellow: 'bg-yellow text-ink',
+  neutral: 'bg-gray-200 text-ink',
+};
+
+const sizes: Record<string, string> = {
+  sm: 'text-[10px] px-[7px] py-[3px]',
+  md: 'text-[12px] px-2.5 py-[5px]',
+};
+---
+
+<span
+  class:list={[
+    'inline-flex items-center leading-none font-condensed font-bold uppercase tracking-[0.05em] rounded-sm',
+    sizes[size],
+    tones[tone],
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</span>

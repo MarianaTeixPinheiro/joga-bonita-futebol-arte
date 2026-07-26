@@ -1,0 +1,64 @@
+---
+/**
+ * Joga Bonita — Input
+ * Clean text field with an uppercase label, hairline border and mint focus ring.
+ * Pass native attributes (name, type, placeholder, required, value…) straight
+ * through. Slots: `prefix` · `suffix` for inline adornments.
+ */
+interface Props {
+  label?: string;
+  hint?: string;
+  error?: string;
+  id?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { label, hint, error, id, class: className, ...rest } = Astro.props;
+
+const inputId =
+  id || (label ? 'inp-' + label.replace(/\s+/g, '-').toLowerCase() : undefined);
+
+const hasPrefix = Astro.slots.has('prefix');
+const hasSuffix = Astro.slots.has('suffix');
+---
+
+<div class:list={['font-sans', className]}>
+  {
+    label && (
+      <label
+        for={inputId}
+        class="block text-[12px] font-bold mb-1.5 uppercase tracking-[0.06em] text-ink-600"
+      >
+        {label}
+      </label>
+    )
+  }
+
+  <div
+    class:list={[
+      'flex items-center gap-2 bg-white rounded-md px-[14px] border-[1.5px]',
+      'transition duration-200 ease-out',
+      error
+        ? 'border-sale'
+        : 'border-gray-300 focus-within:border-ink focus-within:[box-shadow:var(--shadow-focus)]',
+    ]}
+  >
+    {hasPrefix && <span class="shrink-0 inline-flex items-center text-ink-400"><slot name="prefix" /></span>}
+    <input
+      id={inputId}
+      aria-invalid={error ? 'true' : undefined}
+      class="flex-1 min-w-0 border-none outline-none bg-transparent text-[15px] text-ink py-3 placeholder:text-ink-400"
+      {...rest}
+    />
+    {hasSuffix && <span class="shrink-0 inline-flex items-center text-ink-400"><slot name="suffix" /></span>}
+  </div>
+
+  {
+    (hint || error) && (
+      <div class:list={['text-[12px] mt-[5px]', error ? 'text-sale' : 'text-ink-400']}>
+        {error || hint}
+      </div>
+    )
+  }
+</div>

@@ -1,0 +1,64 @@
+---
+/**
+ * Joga Bonita — PriceTag
+ * The storefront price block: optional strikethrough "from" price, current
+ * price, the pix line and the installment line ("ou em até 6x de R$ X sem juros").
+ */
+import { brl } from '../../lib/format';
+
+interface Props {
+  price: number;
+  compareAt?: number | null;
+  installments?: number;
+  pixDiscount?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  price,
+  compareAt = null,
+  installments = 6,
+  pixDiscount = true,
+  size = 'md',
+  class: className,
+} = Astro.props;
+
+const priceSize: Record<string, string> = {
+  sm: 'text-[16px]',
+  md: 'text-[19px]',
+  lg: 'text-[24px]',
+};
+const wasSize: Record<string, string> = {
+  sm: 'text-[11px]',
+  md: 'text-[13px]',
+  lg: 'text-[17px]',
+};
+
+const per = installments ? price / installments : null;
+---
+
+<div class:list={['font-sans text-ink', className]}>
+  <div class="flex items-baseline gap-2 flex-wrap">
+    {
+      compareAt != null && (
+        <s class:list={['text-ink-400 font-medium', wasSize[size]]}>{brl(compareAt)}</s>
+      )
+    }
+    <strong class:list={['font-extrabold tabular-nums', priceSize[size]]}>{brl(price)}</strong>
+  </div>
+
+  {
+    pixDiscount && (
+      <div class="text-[12px] text-mint-700 font-semibold mt-[3px]">no pix e ganhe +3% OFF</div>
+    )
+  }
+
+  {
+    per && (
+      <div class="text-[12px] text-ink-600 mt-[2px]">
+        ou em até <strong class="font-bold">{installments}x de {brl(per)}</strong> sem juros
+      </div>
+    )
+  }
+</div>

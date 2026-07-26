@@ -1,0 +1,58 @@
+---
+/**
+ * Joga Bonita — ProductCard
+ * The repeating unit of the storefront grid: flat-lay image on warm grey,
+ * optional discount badge, lowercase title, price block. Gentle hover zoom.
+ */
+import Badge from './Badge.astro';
+import PriceTag from './PriceTag.astro';
+
+interface Props {
+  image: string;
+  title: string;
+  price: number;
+  compareAt?: number | null;
+  installments?: number;
+  /** Override the auto "{n}% OFF" badge. Pass null to hide it. */
+  badge?: string | null;
+  href?: string;
+  class?: string;
+}
+
+const {
+  image,
+  title,
+  price,
+  compareAt = null,
+  installments = 6,
+  badge,
+  href,
+  class: className,
+} = Astro.props;
+
+const pct = compareAt ? Math.round((1 - price / compareAt) * 100) : null;
+const badgeText = badge !== undefined ? badge : pct ? `${pct}% OFF` : null;
+
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag href={href} class:list={['group block font-sans bg-white', href && 'cursor-pointer', className]}>
+  <div class="relative bg-gray-100 rounded-md overflow-hidden aspect-square">
+    {
+      badgeText && (
+        <div class="absolute top-[10px] left-[10px] z-[2]">
+          <Badge tone="sale">{badgeText}</Badge>
+        </div>
+      )
+    }
+    <img
+      src={image}
+      alt={title}
+      class="w-full h-full object-cover block transition-transform duration-[320ms] ease-out group-hover:scale-[1.04]"
+    />
+  </div>
+
+  <h3 class="mt-3 mb-2 text-[15px] font-bold lowercase text-ink leading-tight">{title}</h3>
+
+  <PriceTag price={price} compareAt={compareAt} installments={installments} size="sm" />
+</Tag>

@@ -1,0 +1,36 @@
+---
+/**
+ * Joga Bonita — Tag / collection chip
+ * Lowercase rounded pill for collections & filters ("futebol arte", "resenha").
+ * Renders as an anchor when `href` is set, otherwise a static chip.
+ */
+interface Props {
+  active?: boolean;
+  href?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { active = false, href, class: className, ...rest } = Astro.props;
+
+const state = active
+  ? 'bg-ink text-white border-ink'
+  : 'bg-gray-100 text-ink border-transparent hover:bg-gray-200';
+
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'inline-flex items-center leading-none font-sans font-semibold text-[13px] lowercase',
+    'px-[15px] py-2 rounded-pill border-[1.5px] cursor-pointer',
+    'transition duration-200 ease-out',
+    'focus-visible:outline-none focus-visible:[box-shadow:var(--shadow-focus)]',
+    state,
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

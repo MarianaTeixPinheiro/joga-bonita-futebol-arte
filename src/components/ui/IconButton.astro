@@ -1,0 +1,70 @@
+---
+/**
+ * Joga Bonita — IconButton
+ * Circular utility action (cart, wishlist, search, nav). Pass an SVG/glyph in
+ * the default slot. Optional numeric `badge` for cart counts etc.
+ */
+interface Props {
+  variant?: 'soft' | 'ink' | 'mint' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  /** Accessible label — rendered as aria-label. */
+  label: string;
+  badge?: string | number | null;
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'soft',
+  size = 'md',
+  label,
+  badge = null,
+  href,
+  type = 'button',
+  class: className,
+  ...rest
+} = Astro.props;
+
+const dims: Record<string, string> = {
+  sm: 'w-[34px] h-[34px]',
+  md: 'w-[42px] h-[42px]',
+  lg: 'w-[50px] h-[50px]',
+};
+
+const variants: Record<string, string> = {
+  soft: 'bg-gray-100 text-ink border border-transparent hover:brightness-95',
+  ink: 'bg-ink text-white border border-ink hover:brightness-95',
+  mint: 'bg-mint text-ink border border-mint hover:brightness-95',
+  outline: 'bg-transparent text-ink border-[1.5px] border-gray-300 hover:brightness-95',
+};
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  type={href ? undefined : type}
+  aria-label={label}
+  class:list={[
+    'relative inline-flex items-center justify-center rounded-full cursor-pointer select-none',
+    'transition duration-200 ease-out active:scale-[0.92]',
+    'focus-visible:outline-none focus-visible:[box-shadow:var(--shadow-focus)]',
+    dims[size],
+    variants[variant],
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+  {
+    badge != null && (
+      <span
+        class="absolute -top-[3px] -right-[3px] min-w-[18px] h-[18px] px-[5px] inline-flex items-center justify-center leading-none rounded-full bg-sale text-white text-[11px] font-bold"
+      >
+        {badge}
+      </span>
+    )
+  }
+</Tag>

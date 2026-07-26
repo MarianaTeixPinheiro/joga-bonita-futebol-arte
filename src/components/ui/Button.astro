@@ -1,0 +1,68 @@
+---
+/**
+ * Joga Bonita — Button
+ * Sporty, confident CTA. Mint primary, ink solid, outline & ghost variants.
+ * Condensed uppercase, pill shape, springy scale-press.
+ *
+ * Slots: default (label) · `icon-left` · `icon-right`
+ */
+interface Props {
+  variant?: 'primary' | 'ink' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  full?: boolean;
+  disabled?: boolean;
+  /** Render as an anchor instead of a button. */
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  full = false,
+  disabled = false,
+  href,
+  type = 'button',
+  class: className,
+  ...rest
+} = Astro.props;
+
+const sizes: Record<string, string> = {
+  sm: 'text-[13px] px-4 py-2 gap-1.5',
+  md: 'text-[14px] px-[22px] py-3 gap-2',
+  lg: 'text-[15px] px-[30px] py-4 gap-2.5',
+};
+
+const variants: Record<string, string> = {
+  primary: 'bg-mint text-ink border-2 border-mint hover:brightness-[0.93]',
+  ink: 'bg-ink text-white border-2 border-ink hover:brightness-[0.93]',
+  outline: 'bg-transparent text-ink border-2 border-ink hover:bg-ink hover:text-white',
+  ghost: 'bg-transparent text-ink border-2 border-transparent hover:bg-gray-100',
+};
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  type={href ? undefined : type}
+  disabled={href ? undefined : disabled}
+  aria-disabled={href && disabled ? 'true' : undefined}
+  class:list={[
+    'inline-flex items-center justify-center leading-none font-condensed font-bold uppercase tracking-[0.06em] rounded-pill cursor-pointer select-none',
+    'transition duration-200 ease-out active:scale-[0.96]',
+    'focus-visible:outline-none focus-visible:[box-shadow:var(--shadow-focus)]',
+    'disabled:opacity-45 disabled:cursor-not-allowed disabled:active:scale-100',
+    full ? 'w-full' : 'w-auto',
+    sizes[size],
+    variants[variant],
+    className,
+  ]}
+  {...rest}
+>
+  <slot name="icon-left" />
+  <slot />
+  <slot name="icon-right" />
+</Tag>
