@@ -76,7 +76,6 @@ const CUPOM = 'PRIMEIRAJOGADA';
 const priceCupom = PRICE * 0.9; // cupom de 10% na 1ª compra
 const pricePix = priceCupom * 0.97; // +3% no pix
 const offLoja = Math.round((1 - PRICE / COMPARE_AT) * 100); // 21%
-const offTotal = Math.round((1 - pricePix / COMPARE_AT) * 100); // 31%
 
 // A estrela do hero + a segunda estampa da vez.
 const heroPrincipal = {
@@ -265,7 +264,7 @@ const faq = [
             <span>·</span>
             <span>cupom {CUPOM} · +10% na 1ª compra</span>
             <span>·</span>
-            <span>até {offTotal}% off</span>
+            <span>todas com {offLoja}% off</span>
             <span>·</span>
             <span>envio pra todo o brasil</span>
             <span>·</span>
@@ -274,16 +273,16 @@ const faq = [
       }
     </div>
     <p class="sr-only">
-      Outlet futebol feminino, últimos dias. Use o cupom {CUPOM} e ganhe mais 10% na primeira
-      compra, até {offTotal}% de desconto.
+      Outlet futebol feminino, últimos dias. Todas as estampas com {offLoja}% de desconto. Use o
+      cupom {CUPOM} e ganhe mais 10% na primeira compra.
     </p>
   </div>
 
   <!-- ░░ header ░░ -->
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
-    <div class="jb-container flex items-center justify-between h-[var(--header-h)]">
+    <div class="jb-container flex items-center justify-between h-12 lg:h-[var(--header-h)]">
       <a href="#topo" aria-label="joga bonita, voltar ao topo" class="flex items-center">
-        <img src={logoPreto.src} alt="joga bonita" class="h-7 w-auto" />
+        <img src={logoPreto.src} alt="joga bonita" class="h-5 lg:h-7 w-auto" />
       </a>
       <Button href="#outlet" variant="ink" size="sm" class="cta-vendas">ver o outlet</Button>
     </div>
@@ -298,13 +297,14 @@ const faq = [
           outlet futebol feminino
         </p>
 
-        <!-- Em todas as larguras: texto de um lado, camiseta do outro. No mobile o
-             bloco de baixo (parágrafo + CTAs) atravessa as duas colunas. -->
+        <!-- De sm pra cima: texto de um lado, camiseta do outro (e o bloco de baixo,
+             parágrafo + CTA, atravessa as duas colunas). No mobile tudo empilha, pra
+             a camiseta poder ocupar largura de verdade em vez de uma coluna estreita. -->
         <div
-          class="mt-6 grid grid-cols-[1.12fr_0.88fr] lg:grid-cols-[1fr_0.92fr] gap-x-4 gap-y-8 sm:gap-x-8 lg:gap-x-16 items-start"
+          class="mt-6 grid grid-cols-1 sm:grid-cols-[1.12fr_0.88fr] lg:grid-cols-[1fr_0.92fr] gap-x-4 gap-y-7 sm:gap-y-8 sm:gap-x-8 lg:gap-x-16 items-start"
         >
           <!-- manchete -->
-          <div class="col-start-1 row-start-1 self-center min-w-0">
+          <div class="sm:col-start-1 sm:row-start-1 self-center min-w-0">
             <h1 class="jb-display text-[clamp(1.95rem,8.4vw,4.6rem)]">
               <span class="block rise d1">se não dão espaço,</span>
               <span class="block rise d2 mt-1">a gente <span class="text-mint">ocupa</span>.</span>
@@ -316,7 +316,7 @@ const faq = [
           </div>
 
           <!-- a estrela do outlet -->
-          <div class="col-start-2 row-start-1 lg:row-span-2 self-center rise d3 min-w-0">
+          <div class="sm:col-start-2 sm:row-start-1 lg:row-span-2 self-center rise d3 min-w-0 w-full max-w-[19rem] mx-auto sm:max-w-none sm:mx-0">
             <a href={heroPrincipal.url} class="group block cta-vendas">
               <div class="relative">
                 <div class="relative overflow-hidden rounded-xl bg-white shadow-lg ring-1 ring-white/10">
@@ -329,7 +329,7 @@ const faq = [
                     loading="eager"
                     fetchpriority="high"
                     widths={[380, 560, 760]}
-                    sizes="(min-width: 1024px) 44vw, 46vw"
+                    sizes="(min-width: 1024px) 44vw, (min-width: 640px) 46vw, 19rem"
                     class="aspect-square w-full object-cover transition-transform duration-[380ms] ease-out group-hover:scale-[1.04]"
                   />
                 </div>
@@ -360,15 +360,18 @@ const faq = [
           </div>
 
           <!-- argumento + chamadas -->
-          <div class="col-span-2 row-start-2 lg:col-span-1 lg:col-start-1 lg:row-start-2">
+          <div class="sm:col-span-2 sm:row-start-2 lg:col-span-1 lg:col-start-1 lg:row-start-2">
             <p class="rise d4 text-lg text-white/75 max-w-md leading-relaxed">
               a arte do futebol feminino, criada por mulheres e estampada em algodão da reserva.
               as que mais saem da loja estão no outlet, com o menor preço que a gente pratica.
             </p>
 
+            <!-- Rótulo longo: no mobile o botão vira barra de largura cheia. "coleção
+                 completa em desconto" estoura a pílula em telas de 375px, então o texto
+                 fica na versão curta que cabe em uma linha até em 320px. -->
             <div class="rise d4 mt-7">
-              <Button href="#outlet" variant="primary" size="lg" class="cta-vendas">
-                ver o outlet
+              <Button href="#outlet" variant="primary" size="lg" full class="cta-vendas sm:w-auto">
+                ver a coleção em desconto
               </Button>
             </div>
 
@@ -379,7 +382,7 @@ const faq = [
           </div>
 
           <!-- a segunda da vez -->
-          <div class="col-span-2 row-start-3 lg:col-span-1 lg:col-start-2 lg:row-start-3 lg:-mt-2">
+          <div class="sm:col-span-2 sm:row-start-3 lg:col-span-1 lg:col-start-2 lg:row-start-3 lg:-mt-2">
             <a
               href={heroSecundaria.url}
               class="group flex items-center gap-4 rounded-xl bg-white/[0.06] ring-1 ring-white/10 p-3 pr-5 transition hover:bg-white/[0.1] cta-vendas"
@@ -457,26 +460,28 @@ const faq = [
       <span
         aria-hidden="true"
         class="pointer-events-none select-none absolute -right-8 top-4 font-display leading-none text-white/[0.04]"
-        style="font-size: clamp(10rem, 24vw, 22rem);">1941</span
+        style="font-size: clamp(7rem, 18vw, 16rem);">1941</span
       >
 
-      <div class="relative jb-container py-16 lg:py-24">
-        <div class="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16">
+      <!-- Bloco de causa: pesa menos que a vitrine de propósito — respiro, manchete e
+           linha do tempo ficam um degrau abaixo do resto da página. -->
+      <div class="relative jb-container py-12 lg:py-16">
+        <div class="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-12">
           <div>
             <p class="jb-eyebrow text-yellow">o que a gente veste, a gente defende</p>
-            <h2 class="jb-display text-display mt-4 max-w-lg">
+            <h2 class="jb-display text-[clamp(1.7rem,3.6vw,2.7rem)] mt-3 max-w-lg">
               elas sempre jogaram.<br />
               <span class="text-mint">só não deixaram</span><br />a gente ver.
             </h2>
           </div>
 
-          <div class="lg:pt-3">
-            <p class="text-lg text-white/80 leading-relaxed max-w-lg">
+          <div class="lg:pt-2">
+            <p class="text-base lg:text-lg text-white/80 leading-relaxed max-w-lg">
               por quase quatro décadas, uma lei brasileira decidiu que futebol não era coisa de
               mulher. de <strong class="text-white font-bold">1941 a 1979</strong>, jogar bola foi
               proibido pra elas neste país. o campo continuou lá. elas é que foram tiradas dele.
             </p>
-            <p class="mt-4 text-lg text-white/80 leading-relaxed max-w-lg">
+            <p class="mt-4 text-base lg:text-lg text-white/80 leading-relaxed max-w-lg">
               quando a proibição caiu, não veio pedido de desculpa nem espaço reservado. veio o
               trabalho de reconquistar tudo de novo, arquibancada por arquibancada, pelada por
               pelada. e ainda tem gente achando que elas estão pedindo demais.
@@ -485,33 +490,33 @@ const faq = [
         </div>
 
         <!-- linha do tempo -->
-        <ol class="mt-14 grid gap-5 sm:grid-cols-3">
+        <ol class="mt-10 grid gap-4 sm:grid-cols-3">
           {
             [
               { ano: '1941', t: 'proibidas por lei', d: 'um decreto federal barra as mulheres de praticar futebol no brasil.' },
               { ano: '1979', t: 'a proibição cai', d: '38 anos depois, elas voltam a poder entrar em campo oficialmente.' },
               { ano: '2027', t: 'a copa vem pra casa', d: 'o mundial feminino no brasil, a maior vitrine que esse futebol já teve aqui.' },
             ].map((m, i) => (
-              <li class="relative rounded-xl bg-white/[0.05] ring-1 ring-white/10 p-6 lg:p-7">
+              <li class="relative rounded-xl bg-white/[0.05] ring-1 ring-white/10 p-5 lg:p-6">
                 <span
                   aria-hidden="true"
                   class="absolute left-0 top-7 h-9 w-1 rounded-r-full bg-yellow"
                 />
                 <p class="jb-eyebrow text-white/40">{String(i + 1).padStart(2, '0')}</p>
-                <p class="jb-display text-yellow text-[clamp(2.25rem,6vw,3.25rem)] leading-none mt-2">
+                <p class="jb-display text-yellow text-[clamp(1.9rem,5vw,2.6rem)] leading-none mt-2">
                   {m.ano}
                 </p>
-                <p class="mt-3 font-condensed font-bold uppercase tracking-[0.03em] text-white text-lg">
+                <p class="mt-2.5 font-condensed font-bold uppercase tracking-[0.03em] text-white text-base">
                   {m.t}
                 </p>
-                <p class="mt-2 text-white/70 leading-snug">{m.d}</p>
+                <p class="mt-1.5 text-sm text-white/70 leading-snug">{m.d}</p>
               </li>
             ))
           }
         </ol>
 
-        <div class="mt-14 border-t border-white/15 pt-9 grid lg:grid-cols-[1fr_auto] gap-7 items-center">
-          <p class="jb-script text-mint text-[clamp(1.5rem,3.6vw,2.1rem)] leading-tight max-w-xl">
+        <div class="mt-10 border-t border-white/15 pt-7 grid lg:grid-cols-[1fr_auto] gap-6 items-center">
+          <p class="jb-script text-mint text-[clamp(1.3rem,3vw,1.8rem)] leading-tight max-w-xl">
             enquanto tiver quem finja que a gente não joga, continuamos transformando futebol em arte.
           </p>
           <Button href="#outlet" variant="primary" size="lg" class="cta-vendas shrink-0">
@@ -625,6 +630,15 @@ const faq = [
           }
         </div>
 
+        <!-- Fim da arara: quem percorreu os corredores e não escolheu nada sai daqui pra
+             loja inteira, em vez de morrer no fim da grade. -->
+        <div class="mt-12 text-center">
+          <Button href={STORE_URL} variant="ink" size="lg" class="cta-vendas">
+            ver loja completa
+          </Button>
+          <p class="mt-3 jb-eyebrow text-ink-400">todas as estampas, modelos e tamanhos</p>
+        </div>
+
         <!-- garantias -->
         <div class="mt-16 border-t border-gray-200 pt-8 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto text-center">
           <div class="flex flex-col items-center gap-2">
@@ -653,11 +667,6 @@ const faq = [
           </div>
         </div>
 
-        <div class="mt-12 text-center">
-          <Button href={STORE_URL} variant="ink" size="lg" class="cta-vendas">
-            conhecer a loja completa
-          </Button>
-        </div>
       </div>
     </section>
 
