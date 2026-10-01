@@ -71,7 +71,7 @@
   a { color: inherit; }
   h1, h2, h3, p { margin: 0; }
   .wrap { width: min(1200px, 100% - 48px); margin-inline: auto; }
-  .display { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: .9; letter-spacing: -.005em; }
+  .display { font-family: var(--display); font-weight: 900; text-transform: uppercase; line-height: 1.02; letter-spacing: -.005em; }
 
   :focus-visible { outline: 3px solid var(--sol); outline-offset: 3px; border-radius: 4px; }
 
@@ -112,7 +112,7 @@
   .hero h1 .l:nth-child(2) { animation-delay: .12s; }
   .hero h1 .l:nth-child(3) { animation-delay: .24s; }
   @keyframes sobe { from { transform: translateY(34%); opacity: 0; } to { transform: none; opacity: 1; } }
-  .hl { display: inline-block; background: var(--rosa); color: var(--tinta); padding: .02em .14em 0; margin-top: .08em; transform: rotate(-1.5deg); }
+  .hl { display: inline-block; background: var(--rosa); color: var(--tinta); padding: .02em .14em 0; margin-top: .18em; transform: rotate(-1.5deg); }
   .hero__sub strong { font-weight: 700; }
   .hero__sub { max-width: 34em; margin-top: 28px; font-size: clamp(18px, 1.7vw, 22px); color: #F6F7F3; }
   .hero__cta { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
@@ -150,8 +150,8 @@
   .produto .msg { font-size: 15px; color: var(--muted); margin-top: 2px; }
   .produto .preco { margin-top: 10px; font: 800 24px/1 var(--display); letter-spacing: .01em; }
   .produto .preco s { font: 500 15px/1 var(--text); color: var(--muted); margin-right: 8px; }
-  .produto .nota { margin-top: 6px; font-size: 14px; color: var(--muted); }
-  .produto .btn { margin-top: 14px; align-self: flex-start; }
+  .produto .nota { margin-top: 6px; margin-bottom: 14px; font-size: 14px; color: var(--muted); }
+  .produto .btn { margin-top: auto; align-self: flex-start; }
 
   /* Não é só uma camiseta */
   .bullets { list-style: none; margin: 0; padding: 0; }
@@ -224,7 +224,7 @@
   .prova__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 700px; }
   .depo { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: var(--card); }
   .depo--real { border: 1px solid var(--line); }
-  .depo img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; max-height: 42vh; object-fit: cover; object-position: center 25%; }
+  .depo img { display: block; width: 100%; height: min(42vh, 90vw, 340px); object-fit: cover; object-position: center 25%; }
   .depo [data-foto] { aspect-ratio: 1 / 1; background: var(--rosa-claro); color: var(--tinta); display: grid; place-items: center; text-align: center; padding: 16px; font-weight: 600; }
   .depo__corpo { padding: 16px 18px 18px; }
   .depo blockquote { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--fg); }
