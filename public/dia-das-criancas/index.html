@@ -518,49 +518,48 @@
 <div class="sticky" id="sticky"><a class="btn" href="#escolha">Escolher o presente</a></div>
 
 <script>
-  // Dados reais da coleção infantil: https://www.jogabonita.com.br/jogabonita/collections/infantil
-  // Nomes, links, imagens e preços conferidos no site em 21/09/2026; podem mudar.
+  // Os 12 produtos da coleção infantil, na ordem do guia da consultora.
+  // Nome, link, foto, preço e estoque conferidos em cada página da loja em 01/10/2026; podem mudar.
   var LOJA_URL = "https://www.jogabonita.com.br/jogabonita/collections/infantil";
   // Fotos copiadas da loja e convertidas para JPEG: o WebP sem perda da loja (VP8L) não abre no Safari do iPhone.
   var IMG = "img/";
   var LOJA = "https://www.jogabonita.com.br/jogabonita/product/";
 
-  // Todas as camisetas da coleção estão com o mesmo preço: R$ 107,90 no pix (de R$ 119,90, 10% OFF) ou 6x de R$ 17,98 sem juros.
-  function item(p) { p.preco = "107,90"; p.de = "119,90"; p.nota = "no pix ou 6x de R$ 17,98 sem juros"; return p; }
+  // Preço da loja: "de" R$ 119,90 e o preço promocional; no Pix a loja dá mais 3% OFF.
+  // O cupom MENINAJOGA não entra no preço exibido: ele é aplicado no checkout.
+  function item(p) {
+    p.preco = p.preco || "107,90"; p.off = p.off || "10% OFF"; p.parcela = p.parcela || "17,98"; p.de = "119,90";
+    p.nota = "6x de R$ " + p.parcela + " sem juros ou +3% OFF no Pix";
+    return p;
+  }
 
   // As camisetas desenhadas (linhas/camisa/tinta/fundo) são o fallback quando a foto não carrega.
-  // A hospedagem desta página bloqueia imagens externas; no seu site as fotos (campo img) carregam por cima.
-
-  // 4 estampas em destaque (abrem a vitrine)
-  var VITRINE = [
-    item({ nome: "Jogue como uma menina", msg: "acredito", linhas: ["JOGUE COMO", "UMA MENINA"], camisa: "#FF3D8B", tinta: "#FFFFFF", fundo: "#FFD3E5",
-      img: IMG + "3c2202494d90c63efee508811c3dd583.jpg", url: LOJA + "jogue-como-uma-menina-5e5c143c-941b-4e78-be85-9a8f99ea858d" }),
+  var PRODUTOS = [
+    item({ nome: "Jogue Como Uma Menina", msg: "acredito", linhas: ["JOGUE COMO", "UMA MENINA"], camisa: "#FF3D8B", tinta: "#FFFFFF", fundo: "#FFD3E5",
+      img: IMG + "8c93bab17ffda55eaa40677e2d052825.jpg", url: LOJA + "jogue-como-uma-menina-44a09043-dd19-4191-885f-844f8978d30a" }),
+    item({ nome: "Futebol de Menina é Arte", msg: "lugar", linhas: ["FUTEBOL", "DE MENINA"], camisa: "#0E5C3E", tinta: "#FFD3E5", fundo: "#FF3D8B",
+      img: IMG + "446aa1747bad37b23c20610f3fd3905e.jpg", url: LOJA + "futebol-de-menina-e-arte-d15b828f-29d4-4dc3-9e2d-1c4c2833c594" }),
+    item({ nome: "Born to Play Soccer", msg: "joga", linhas: ["BORN TO", "PLAY"], camisa: "#FFD23F", tinta: "#0B4F35", fundo: "#FF3D8B",
+      preco: "99,90", off: "16% OFF", parcela: "16,65",
+      img: IMG + "a64f9a7afd9fd9b06777e7c05c9ba5d7.jpg", url: LOJA + "born-to-play-soccer-4ecaff43-7ca0-47ea-b812-64ffa628dc53" }),
+    item({ nome: "Jogar Futebol, Gostoso Demais", msg: "joga", linhas: ["JOGAR", "FUTEBOL"], camisa: "#F6F7F3", tinta: "#0B4F35", fundo: "#FFD23F",
+      img: IMG + "81cf8814b3998df27f13554dd628820a.jpg", url: LOJA + "jogar-futebol-gostoso-demais-ef162eb8-a8e6-49b1-a5a2-47e7f6c71e7e" }),
+    item({ nome: "Bora Jogar Bola?", msg: "joga", linhas: ["BORA", "JOGAR", "BOLA?"], camisa: "#FFD23F", tinta: "#0B4F35", fundo: "#0E5C3E",
+      img: IMG + "2ce846078fa9341d815b608185023634.jpg", url: LOJA + "bora-jogar-bola-c08fbc5a-ecd0-44be-994f-0962a903bf7d" }),
+    item({ nome: "Futebol? Aceito", msg: "joga", linhas: ["FUTEBOL?", "ACEITO"], camisa: "#FF3D8B", tinta: "#FFFFFF", fundo: "#FFD23F",
+      img: IMG + "c54acc432e716bea64ea29a36c8e9890.jpg", url: LOJA + "futebol-aceito-meme-31f2522c-e4f8-42f8-ad18-b860caf97cd5" }),
+    item({ nome: "Jogadora Favorita da Dinda", msg: "acredito", linhas: ["JOGADORA", "FAVORITA", "DA DINDA"], camisa: "#F6F7F3", tinta: "#FF3D8B", fundo: "#0E5C3E",
+      img: IMG + "75aa486a9f99f2287f3b649773f756f3.jpg", url: LOJA + "jogadora-favorita-da-dinda" }),
+    item({ nome: "Queria Estar Jogando Futebol", msg: "joga", linhas: ["QUERIA ESTAR", "JOGANDO", "FUTEBOL"], camisa: "#0E5C3E", tinta: "#F6F7F3", fundo: "#FFD3E5",
+      img: IMG + "0c7b25a8a387703855c574e651387f4a.jpg", url: LOJA + "queria-estar-jogando-futebol-e269066c-8b28-4603-aead-d4b69f094452" }),
     item({ nome: "Futebol é Delas", msg: "lugar", linhas: ["FUTEBOL", "É DELAS"], camisa: "#0E5C3E", tinta: "#F6F7F3", fundo: "#FFD23F",
       img: IMG + "2e9a1c0b7c72dfc3928f0e6dad3ba1f2.jpg", url: LOJA + "futebol-e-delas-d8298bfa-72a9-4b8b-9ac9-692530f52e1c" }),
-    item({ nome: "Born to play", msg: "joga", linhas: ["BORN TO", "PLAY"], camisa: "#FFD23F", tinta: "#0B4F35", fundo: "#FF3D8B",
-      img: IMG + "a64f9a7afd9fd9b06777e7c05c9ba5d7.jpg", url: LOJA + "feminina-de-futebol-estampa-born-to-play-joga-bonita-a2336ade-4ab5-4511-8e98-d166e655e605" }),
-    item({ nome: "Jogadora favorita da dinda", msg: "acredito", linhas: ["JOGADORA", "FAVORITA", "DA DINDA"], camisa: "#F6F7F3", tinta: "#FF3D8B", fundo: "#0E5C3E",
-      img: IMG + "1c8fe9b49e278cf445457371ae2c05f9.jpg", url: LOJA + "jogadora-favorita-da-dinda" })
-  ];
-
-  // Demais estampas da vitrine
-  var PRODUTOS = [
-    item({ nome: "Jogadora favorita do papai", msg: "acredito", linhas: ["JOGADORA", "FAVORITA", "DO PAPAI"], camisa: "#FF3D8B", tinta: "#FFFFFF", fundo: "#FFD23F",
+    item({ nome: "Selo de Amor: Futebol", msg: "acredito", linhas: ["SELO DE", "AMOR"], camisa: "#FFD3E5", tinta: "#FF3D8B", fundo: "#0E5C3E",
+      img: IMG + "d87d5db17f63fc66fb53b5b46a4f9fee.jpg", url: LOJA + "selo-de-amor-futebol-0c3a7a99-9fd4-4477-82a3-00536aad870a" }),
+    item({ nome: "Jogadora Favorita do Papai", msg: "acredito", linhas: ["JOGADORA", "FAVORITA", "DO PAPAI"], camisa: "#FF3D8B", tinta: "#FFFFFF", fundo: "#FFD23F",
       img: IMG + "4a7df45f13bf56856e8b416ff1647cd6.jpg", url: LOJA + "jogadora-favorita-do-papai" }),
-    item({ nome: "Artilheira", msg: "acredito", linhas: ["ARTILHEIRA"], camisa: "#10251C", tinta: "#FFD23F", fundo: "#FFD3E5",
-      img: IMG + "65eaeb748fc55f1ddd1be0838a8c5baf.jpg", url: LOJA + "feminina-de-futebol-estampa-artilheira-joga-bonita-ee435dac-ba9a-481a-b498-09505e88cbb2" }),
-    item({ nome: "Futebol de menina arte", msg: "lugar", linhas: ["FUTEBOL", "DE MENINA"], camisa: "#0E5C3E", tinta: "#FFD3E5", fundo: "#FF3D8B",
-      img: IMG + "446aa1747bad37b23c20610f3fd3905e.jpg", url: LOJA + "futebol-de-menina-arte" }),
-    item({ nome: "Neymar riscado, Marta 10", msg: "lugar", linhas: ["NEYMAR", "RISCADO,", "MARTA 10"], camisa: "#F6F7F3", tinta: "#FF3D8B", fundo: "#0E5C3E",
-      img: IMG + "fe6cccd0c53106e755d447ba841e2949.jpg", url: LOJA + "neymar-riscado-marta-10-a79d0bee-9598-4370-ba7c-6f8fa9b7a782" }),
-    item({ nome: "Jogadora de futebol", msg: "lugar", linhas: ["JOGADORA", "DE FUTEBOL"], camisa: "#FFD3E5", tinta: "#0B4F35", fundo: "#FF3D8B",
-      img: IMG + "9eab887fd1f714e5d7e6aba0e022ed2c.jpg", url: LOJA + "jogadora-de-futebol-bc149657-9bdf-492c-adc7-59d4d0a3f75f" }),
-    item({ nome: "Bora jogar bola?", msg: "joga", linhas: ["BORA", "JOGAR", "BOLA?"], camisa: "#FFD23F", tinta: "#0B4F35", fundo: "#0E5C3E",
-      img: IMG + "a1bc1e177460a59a6a686b9ef61a99b2.jpg", url: LOJA + "bora-jogar-bola-3309edb5-5a28-4569-b7a1-d800ef900616" }),
-    item({ nome: "Goleira", msg: "joga", linhas: ["GOLEIRA"], camisa: "#FF3D8B", tinta: "#FFD23F", fundo: "#FFD3E5",
-      img: IMG + "8626eb1dd6c7c5cd5c0d3fc581825a22.jpg", url: LOJA + "feminina-de-futebol-estampa-goleira-joga-bonita-0dda31b2-d684-4392-8efb-6c69ea950424" }),
-    item({ nome: "Não posso, hoje tem futebol.", msg: "joga", linhas: ["NÃO POSSO,", "HOJE TEM", "FUTEBOL."], camisa: "#0E5C3E", tinta: "#F6F7F3", fundo: "#FFD23F",
-      img: IMG + "112a41777561cd8bd5ea3e21ade3514e.jpg", url: LOJA + "nao-posso-hoje-tem-futebol-0e50b983-073f-4011-b300-2baa2e4ace5c" })
+    item({ nome: "Futebol Feminino no Centro", msg: "lugar", linhas: ["FUTEBOL", "FEMININO"], camisa: "#10251C", tinta: "#FFD23F", fundo: "#FFD3E5",
+      img: IMG + "61c38dd8eb376cdcd7b050da6ea3e51c.jpg", url: LOJA + "futebol-feminino-no-centro-31c8c196-8fd4-4b51-be87-fdf3f7fc0ad4" })
   ];
 
   var ROTULOS = { acredito: "Eu acredito em você", lugar: "Seu lugar também é no campo", joga: "Você pode jogar o que quiser" };
@@ -586,7 +585,7 @@
     var url = p.url || LOJA_URL;
     var externo = /^https?:/.test(url) ? ' target="_blank" rel="noopener"' : '';
     return '<article class="produto">' +
-      '<div class="tile" style="background:' + p.fundo + '">' + camisaSVG(p) + imgTag(p) + '<span class="produto__off">10% OFF</span></div>' +
+      '<div class="tile" style="background:' + p.fundo + '">' + camisaSVG(p) + imgTag(p) + '<span class="produto__off">' + p.off + '</span></div>' +
       '<h3>' + p.nome + '</h3>' +
       (mostrarMsg ? '<p class="msg">' + ROTULOS[p.msg] + '</p>' : '') +
       '<p class="preco">' + (p.de ? '<s>R$ ' + p.de + '</s>' : '') + 'R$ ' + p.preco + '</p>' +
@@ -595,10 +594,8 @@
       '</article>';
   }
 
-  // Vitrine principal: 4 destaques
-
-  // Vitrine: 4 destaques + 8 estampas
-  document.getElementById("escolha-grid").innerHTML = VITRINE.concat(PRODUTOS).map(function (p) { return cartao(p, true); }).join("");
+  // Vitrine: os 12 produtos
+  document.getElementById("escolha-grid").innerHTML = PRODUTOS.map(function (p) { return cartao(p, true); }).join("");
   // Copiar código do cupom
   (function () {
     var btn = document.getElementById("cupom-btn");
